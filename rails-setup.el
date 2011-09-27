@@ -52,7 +52,6 @@
 ;; ECB preferences early setup
 (setq ecb-auto-activate 't)
 (setq ecb-tip-of-the-day nil)
-(setq ecb-source-path (quote (("/" "/") ("/Users/ldeck" "ldeck") ("/Users/ldeck/Documents/Work/DiUS/client/macquarie/marquis" "marquis"))))
 (setq ecb-layout-window-sizes (quote (("left8" (ecb-directories-buffer-name 0.25 . 0.28) (ecb-sources-buffer-name 0.25 . 0.23) (ecb-methods-buffer-name 0.25 . 0.28) (ecb-history-buffer-name 0.25 . 0.17)))))
 
 ;; custom variables
