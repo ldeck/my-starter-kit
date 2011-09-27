@@ -118,6 +118,8 @@ i. To install emacs24
         # (optionally) add the following alias to your ~/.profile to make use of emacs24 in the terminal also
         alias emacs="~/Applications/Emacs.app/Contents/MacOS/Emacs -nw"
 
+    Note: if using Quicksilver, Alfred or the like, you may need to add /usr/local/Cellar to your search list.
+
 ii. To install an [Aquamacs24 nightly](http://aquamacs.org/nightlies.shtml)
     
         cd /tmp
@@ -156,12 +158,14 @@ Note: Aquamacs additionally keeps its configs in either of the following places:
 c) **Test the application(s) actually work**. Fire them up.
 
 
-Step 3 : Configure Emacs for IDE-like layout
---------------------------------------------
+Step 3 : Configure Emacs for IDE-like layout (optional)
+-------------------------------------------------------
 
 I found it best to get this part working first, while the config has minimal changes.
 Otherwise it's harder to figure out what might be the problem, if it fails.
-The two choices are *ECB* and the *Looks Like TextMate* mode. See the [Appendix](#appendix:referencematerial).
+The primary choice appears to be *ECB*, though some prefer not to clutter their workspace.
+There's also a mode called *Looks Like TextMate* floating around.
+See the [Appendix](#appendix:referencematerial).
 
 a) **Download ECB**
 
@@ -172,45 +176,27 @@ b) **Configure ECB**
 
 Edit ~/.emacs.d/init.el and add the following content:
 
-    ;; custom variables setup
-    (custom-set-variables
-     ;; custom-set-variables was added by Custom.
-     ;; If you edit it by hand, you could mess it up, so be careful.
-     ;; Your init file should contain only one such instance.
-     ;; If there is more than one, they won't work right.
-     '(ecb-options-version "2.40"))
-    (custom-set-faces
-     ;; custom-set-faces was added by Custom.
-     ;; If you edit it by hand, you could mess it up, so be careful.
-     ;; Your init file should contain only one such instance.
-     ;; If there is more than one, they won't work right.
-     )
-    
     ;; activate ecb if running xemacs
-    (if (fboundp 'running-xemacs)
-        (cond ((and running-xemacs
-                    (emacs-version>= 24 0))
-                (add-to-list 'load-path "~/.emacs.d/ecb")
-                (require 'ecb)
-                ;;###############################################################
-                ;;uncomment these next two lines momentarily if ecb fails to load
-                ;;###############################################################
-                ;;(ecb-activate)
-                ;;(ecb-byte-compile)
+    (add-to-list 'load-path "~/.emacs.d/ecb")
+    (require 'ecb)
+    ;;###############################################################
+    ;;uncomment these next two lines momentarily if ecb fails to load
+    ;;###############################################################
+    ;;(ecb-activate)
+    ;;(ecb-byte-compile)
     )))
 
 Fire up Emacs.app or Aquamacs.app and verify that ECB loaded.
 If not, quit Emacs and uncomment the two lines highlighted above and try again.
 If that worked, recomment out those lines.
 
-You'll notice that the elisp above will only load ecb if running a gui version of emacs, aka xemacs.
-
-
-
-
 Step 3 : Configure Emacs for Rails
 ----------------------------------
 
+There is a plethora of choices for emacs rails development, a sample of which is contained in the [Appendix](#appendix:referencematerial).
+Rinari and emacs-rails[-reloaded] are the two main camps it would appear, though many github repos have customised these further.
+
+A good starting point is 
 
 Step 4 : Additional Config
 --------------------------
@@ -253,8 +239,10 @@ Note: modes in *italics* are interesting but not necessarily up to snuff
 * Version Control
     * [Magit](http://www.emacswiki.org/emacs/Magit)
 * Various
+    * [AutoComplete](http://www.emacswiki.org/emacs/AutoComplete)
     * [Yasnippet](http://code.google.com/p/yasnippet/)
     * [Same Frame Speedbar](https://github.com/emacsmirror/sr-speedbar)
+    * [Smex](http://www.emacswiki.org/emacs/Smex)
     * [CEDET Speedbar](http://cedet.sourceforge.net/speedbar.shtml)
     * [Toggle](https://github.com/djwhitt/toggle-el)
     * [Emacs mirror of lots of modes on github](https://github.com/emacsmirror)
@@ -264,12 +252,14 @@ Emacs Configs For Rails
 
 * [Jerry Deng :: Github :: emacs-ruby-rails-cucumber](https://github.com/jerrydeng/emacs-ruby-rails-cucumber)
 * [JBPros :: Github :: emacs-setup](https://github.com/jbpros/emacs-setup)
-* [Emails Starter Kit](https://github.com/technomancy/emacs-starter-kit)
+* [Emacs Starter Kit :: Technomancy](https://github.com/technomancy/emacs-starter-kit)
+* [Emacs Starter Kit :: Timsu](https://github.com/timsu/emacs-starter-kit)
 
 Relevant Blogs
 
 * [viget.com :: Emacs 24 Rails Development Environment - From \*scratch\* to Productive in 5 Minutes](http://www.viget.com/extend/emacs-24-rails-development-environment-from-scratch-to-productive-in-5-minu/)
 * [Apps in the Open :: Setting up Emacs for Rails Development](http://appsintheopen.com/articles/1-setting-up-emacs-for-rails-development)
+* [M-x all-things-emacs](feed://feeds.feedburner.com/emacsblog)
 * [Simple and Basic :: Using RTags and GTags for coding Ruby](http://simple-and-basic.com/2008/10/using-rtags-ang-gtags-for-coding-ruby.html)
 * [docwhat.org :: CEDET/ECB for Aquamacs](http://docwhat.org/2010/08/cedet-ecb-for-aquamacs/)
 * [Ruby on Emacs (journey from Textmate)](http://codehunk.wordpress.com/2009/01/14/ruby-on-emacsjourney-from-textmate-to-emacs/)
