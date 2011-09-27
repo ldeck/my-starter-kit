@@ -1,0 +1,328 @@
+Using Emacs for Ruby on Rails Development
+=========================================
+
+by Lachlan Deck
+
+---
+
+This guide makes the following assumptions
+
+* you're running Mac OS X 10.7 Lion
+* you're using VMWare for additional instances, such as for Ubuntu
+
+but it may be generally useful for other *nix environments.
+
+Step 1 : Prerequisites
+----------------------
+
+a) **Install MacPorts and Homebrew**
+
+I recommend installing both [MacPorts](http://macports.org) and [homebrew](http://mxcl.github.com/homebrew/)
+for the ease they provide in installing additional software, particularly of the UNIX variety.
+
+To keep them up to date:
+
+    sudo port selfupdate
+    [sudo] brew update
+
+b) **Update shell PATH**
+
+Ensure your shell path is correctly set to ensure that any ports/brews you install are found and used before those previously built into the system.
+Either edit your bash ~/.profile, for example, manually or run the following two commands in the terminal.
+
+    if ! [ -f ~/.profile ]; then touch ~/.profile; fi
+    echo 'export PATH=/opt/local/bin:/opt/local/sbin:/usr/local/bin:$PATH' >> ~/.profile
+
+
+c) **Update git** (optional)
+
+it's quite likely on Mac OS X you already have git installed.
+This step allows you to update it to a more recent version than was packaged with Mac OS X.
+So if you want the *very* latest version of git-core you have a few options.
+
+i. install via [MacPorts](http://macports.org)
+
+    sudo port install git-core [+svn +bash_completion]
+
+ii. install via [homebrew](http://mxcl.github.com/homebrew/)
+
+    brew install git
+
+d) **Update ctags** (optional)
+
+The version of ctags/etags shipped with Mac OS X is either older or simpler than the
+GNU exuberant ctags. Both will do a similar job, but the GNU one has many more options and its
+options are usually the ones referred to on various blogs.
+
+Install the latest via either [MacPorts](http://macports.org) or [homebrew](http://mxcl.github.com/homebrew/)
+
+i. install via [MacPorts](http://macports.org)
+
+    sudo port install ctags
+
+ii. install via [homebrew](http://mxcl.github.com/homebrew/)
+
+    brew install ctags
+
+d) **VMWare --> Ubuntu --> install sshfs** (optional)
+
+To mount your host mac os file-system in Ubuntu, you can use [sshfs](http://fuse.sourceforge.net/sshfs.html):
+
+    sudo apt-get install sshfs
+    
+This way you can checkout and edit the relevant project from the Mac.
+To mount a remote Mac OS X directory from Ubuntu (note the idmap, uid and gid usages):
+
+    # verify uid and gid
+    MYUID=`id | perl -n -e '/uid=(\d+)/ && print $1'`
+    # verify gid
+    MYGID=`id | perl -n -e '/gid=(\d+)/ && print $1'`
+    
+    # make mount point and mount mac host dir
+    mkdir -p /mnt/myremote && chmod 777 /mnt/myremote;
+    sshfs -o idmap=user -o uid=$MYUID -o gid=$MYGID user@machostip[:path/to/mount] /mnt/myremote
+
+To unmount
+
+    fusermount -u /mnt/myremote
+
+See also [Tero Karvinen Blog :: Mount Remote SSH Filesystem with FUSE](http://myy.helia.fi/~karte/mount_sshfs.html)
+
+
+Step 2 : Emacs install
+----------------------
+
+Emacs is already built into Mac OS X ***but*** to make it easier
+to use and/or extend its functionality it's helpful to grab a more recent copy.
+
+> There are two primary choices, standard GNU Emacs or Aquamacs. Aquamacs has very nice additions for the
+> Mac environment, especially keyboard shortcuts similar to TextMate. But either is fine and customisable.
+> For ease of setup, having good defaults is the key ingredient.
+> 
+> Using the latest emacs (24, at this time) is recommended rather than the current stable release (23) as it bundles
+> a few extra things by default, such as [ELPA](http://tromey.com/elpa/), making it easier to install additional add-ons for emacs,
+> and themes and so on. Unfortunately ELPA doesn't always include everything, of course, like ECB. We'll get to that.
+> Emacs 24 does, however, include what ECB requires, primarily CEDET, which simplifies things.
+> 
+> It's not very hard to [install ELPA](http://tromey.com/elpa/install.html), however, should you choose to go with
+> the current stable release of emacs. You may need to be in lisp-mode to eval the code they've listed.
+> You'd need to install CEDET first.
+
+a) **happily install GNU Emacs, Aquamacs, or both**; whichever suits you:
+
+i. To install emacs24
+
+        brew install emacs [--cocoa] --use-git-head --HEAD
+        brew linkapps # puts a symlink for Emacs.app into ~/Applications
+        
+        # (optionally) add the following alias to your ~/.profile to make use of emacs24 in the terminal also
+        alias emacs="~/Applications/Emacs.app/Contents/MacOS/Emacs -nw"
+
+ii. To install an [Aquamacs24 nightly](http://aquamacs.org/nightlies.shtml)
+    
+        cd /tmp
+        curl -O http://braeburn.aquamacs.org/~dr/Aquamacs/24/Aquamacs-nightly.tar.bz2
+        tar xjvf Aquamacs-nightly.tar.bz2
+        # give it a version name to avoid collision with stable version
+        rm -rf /Applications/Aquamacs24.app
+        mv Aquamacs.app /Applications/Aquamacs24.app
+        
+See [Aquamacs customisation options](http://www.emacswiki.org/emacs/CustomizeAquamacs) for various tips.
+
+b) **Create initial config file**
+
+    # create emacs config dir
+    mkdir -p ~/.emacs.d
+    
+    # create basic config with the following content
+    emacs ~/.emacs.d/init.el
+    ;; emacs configuration
+    ;;
+    ;; if problems occur we want some info!
+    ;; keep me up top.
+    (setq stack-trace-on-error t)
+    (setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
+                             ("gnu" . "http://elpa.gnu.org/packages/")
+                             ;;community effort
+                             ;;("marmelaide" "http://marmalade-repo.org/packages/")
+                             ))
+    
+
+Note: Aquamacs additionally keeps its configs in either of the following places:
+
+    "~/Library/Application Support/Aquamacs Emacs/"
+    "~/Library/Preferences/Aquamacs Emacs/"
+
+c) **Test the application(s) actually work**. Fire them up.
+
+
+Step 3 : Configure Emacs for IDE-like layout
+--------------------------------------------
+
+I found it best to get this part working first, while the config has minimal changes.
+Otherwise it's harder to figure out what might be the problem, if it fails.
+The two choices are *ECB* and the *Looks Like TextMate* mode. See the [Appendix](#appendix:referencematerial).
+
+a) **Download ECB**
+
+    cd ~/.emacs.d
+    git clone https://github.com/emacsmirror/ecb.git
+
+b) **Configure ECB**
+
+Edit ~/.emacs.d/init.el and add the following content:
+
+    ;; custom variables setup
+    (custom-set-variables
+     ;; custom-set-variables was added by Custom.
+     ;; If you edit it by hand, you could mess it up, so be careful.
+     ;; Your init file should contain only one such instance.
+     ;; If there is more than one, they won't work right.
+     '(ecb-options-version "2.40"))
+    (custom-set-faces
+     ;; custom-set-faces was added by Custom.
+     ;; If you edit it by hand, you could mess it up, so be careful.
+     ;; Your init file should contain only one such instance.
+     ;; If there is more than one, they won't work right.
+     )
+    
+    ;; activate ecb if running xemacs
+    (if (fboundp 'running-xemacs)
+        (cond ((and running-xemacs
+                    (emacs-version>= 24 0))
+                (add-to-list 'load-path "~/.emacs.d/ecb")
+                (require 'ecb)
+                ;;###############################################################
+                ;;uncomment these next two lines momentarily if ecb fails to load
+                ;;###############################################################
+                ;;(ecb-activate)
+                ;;(ecb-byte-compile)
+    )))
+
+Fire up Emacs.app or Aquamacs.app and verify that ECB loaded.
+If not, quit Emacs and uncomment the two lines highlighted above and try again.
+If that worked, recomment out those lines.
+
+You'll notice that the elisp above will only load ecb if running a gui version of emacs, aka xemacs.
+
+
+
+
+Step 3 : Configure Emacs for Rails
+----------------------------------
+
+
+Step 4 : Additional Config
+--------------------------
+
+Packages you might want to install with M-x package-list-package.
+
+Appendix : Reference Material
+-----------------------------
+
+Emacs Modes worth the mention  
+Note: modes in *italics* are interesting but not necessarily up to snuff
+
+* TextMate mimicking
+    * [TextMate Mode](https://github.com/defunkt/textmate.el)
+    * *[Look Like TextMate](https://github.com/lalonde/look_like_textmate.el/blob/master/look_like_textmate.el)*,  
+      a fork of what Aquamacs does with tabs but uses speedbar which is kinda clunky
+* Testing
+    * [Test case mode :: Main site](http://nschum.de/src/emacs/test-case-mode/)
+    * [Test case mode :: Github](https://github.com/search?q=test-case-mode&type=Everything&repo=&langOverride=&start_value=1)
+    * [Cucumber Mode](https://github.com/michaelklishin/cucumber.el)
+* Ruby specific
+    * [RSense](http://cx4a.org/software/rsense/)
+    * [Yari front end to ri](https://github.com/pedz/yari-with-buttons)
+    * [Flymake Ruby :: Github](https://github.com/purcell/flymake-ruby)
+    * [Flymake Ruby :: EmacsWiki](http://www.emacswiki.org/emacs/FlymakeRuby)
+* Rails specific
+    * [Emacs Rails :: GitHub :: EmacsMirror](https://github.com/emacsmirror/emacs-rails)
+    * [Emacs Rails :: GitHub :: Remvee](https://github.com/remvee/emacs-rails)
+    * [Github search for emacs-rails](https://github.com/search?langOverride=&q=emacs-rails&repo=&start_value=1&type=Repositories)
+    * [Rinari :: Github :: Technomancy](https://github.com/technomancy/rinari)
+    * [Rinari :: RubyForge](http://rinari.rubyforge.org/)
+    * [Emails Rails Reloaded](https://github.com/r0man/emacs-rails-reloaded)
+* JVM Related
+    * [JDEE for Java](http://jdee.sourceforge.net/)
+    * [ENSIME for Scala](http://www.scala-lang.org/node/6025)
+* IDE mimicking
+    * [ECB at sourceforge](http://ecb.sourceforge.net/)
+    * [ECB mirror at github, with more recent updates](https://github.com/emacsmirror/ecb)
+    * [CEDET](http://cedet.sourceforge.net/)
+* Version Control
+    * [Magit](http://www.emacswiki.org/emacs/Magit)
+* Various
+    * [Yasnippet](http://code.google.com/p/yasnippet/)
+    * [Same Frame Speedbar](https://github.com/emacsmirror/sr-speedbar)
+    * [CEDET Speedbar](http://cedet.sourceforge.net/speedbar.shtml)
+    * [Toggle](https://github.com/djwhitt/toggle-el)
+    * [Emacs mirror of lots of modes on github](https://github.com/emacsmirror)
+    * [Bosko customised init.el](https://github.com/bosko/emacs-customizations/blob/master/customization.el)
+
+Emacs Configs For Rails
+
+* [Jerry Deng :: Github :: emacs-ruby-rails-cucumber](https://github.com/jerrydeng/emacs-ruby-rails-cucumber)
+* [JBPros :: Github :: emacs-setup](https://github.com/jbpros/emacs-setup)
+* [Emails Starter Kit](https://github.com/technomancy/emacs-starter-kit)
+
+Relevant Blogs
+
+* [viget.com :: Emacs 24 Rails Development Environment - From \*scratch\* to Productive in 5 Minutes](http://www.viget.com/extend/emacs-24-rails-development-environment-from-scratch-to-productive-in-5-minu/)
+* [Apps in the Open :: Setting up Emacs for Rails Development](http://appsintheopen.com/articles/1-setting-up-emacs-for-rails-development)
+* [Simple and Basic :: Using RTags and GTags for coding Ruby](http://simple-and-basic.com/2008/10/using-rtags-ang-gtags-for-coding-ruby.html)
+* [docwhat.org :: CEDET/ECB for Aquamacs](http://docwhat.org/2010/08/cedet-ecb-for-aquamacs/)
+* [Ruby on Emacs (journey from Textmate)](http://codehunk.wordpress.com/2009/01/14/ruby-on-emacsjourney-from-textmate-to-emacs/)
+* [Turn Emacs into IDE](http://nsaunders.wordpress.com/2009/11/18/turn-emacs-into-an-ide/)
+* [utkarshsengar.com :: Emacs Python Setup](http://utkarshsengar.com/2011/06/emacs-python/)
+* [Emacs-fu :: Navigating through source code](http://emacs-fu.blogspot.com/2009/01/navigating-through-source-code-using.html)
+* [Emacs NERDERY :: Search & Replace Across Files](http://atomized.org/2009/05/emacs-nerdery-search-replace-across-files/)
+* [Emacs24 Features Preview](http://batsov.com/Emacs/2011/08/19/a-peek-at-emacs24.html)
+
+Relevant Screencasts
+
+* [Rinari Screencast](http://vimeo.com/2854412)
+* [Platypope demo](http://platypope.org/yada/emacs-demo/)
+* [Emacs Screencasts](http://www.emacswiki.org/emacs/EmacsScreencasts)
+
+Reference / Wiki sites:
+
+* [Emacs Quick Reference](http://sean.wenzel.net/docs/emacs/quick_reference/)
+* [Emacs Command List](http://lpn.rnbhq.org/tools/xemacs/emacs_ref.html)
+* [Emacs Keyboard Shortcuts](http://xahlee.org/emacs/keyboard_shortcuts.html)
+* [GNU Emacs](http://www.gnu.org/s/emacs/)
+* [Gentle Introduction to CEDET](http://alexott.net/en/writings/emacs-devenv/EmacsCedet.html)
+* [GNU Global source code tag system](http://www.gnu.org/software/global/global.html)
+* [Aquamacs Features](http://aquamacs.org/features.shtml)
+* [Aquamacs FAQ](http://www.emacswiki.org/cgi-bin/wiki/AquamacsFAQ)
+* [XEmacs FAQ](http://www.xemacs.org/faq/xemacs-faq.html)
+* [Customise Aquamacs](http://www.emacswiki.org/emacs/CustomizeAquamacs)
+* [Emacs Wiki :: RubyOnRails](http://www.emacswiki.org/emacs/RubyOnRails)
+* [Rails Wiki :: Emacs](http://oldwiki.rubyonrails.org/rails/pages/HowToUseEmacsWithRails)
+* [Creating TAGS table](http://braeburn.aquamacs.org/code/master/aquamacs/doc/EmacsManual/Create-Tags-Table.html)
+* [Killing & Yanking](http://www.emacswiki.org/emacs/?action=browse;oldid=DefaultKillingAndYanking;id=KillingAndYanking)
+* [Sample init.el File](http://anonscm.debian.org/hg/xemacs/xemacs-gobject/etc/sample.init.el)
+* [ECB Docs](http://www.xemacs.org/Documentation/packages/html/ecb_toc.html#SEC_Contents)
+* [Git Submodules](http://chrisjean.com/2009/04/20/git-submodules-adding-using-removing-and-updating/)
+
+Customisation Options
+
+* [Existing Elpa Themes](http://elpa.gnu.org/themes/view.html)
+* [Quickly mock up a custom elpa theme](http://elpa.gnu.org/themes/)
+* [Emacs Transparency](http://www.emacswiki.org/emacs/TransparentEmacs)
+* [Customise Aquamacs](http://www.emacswiki.org/emacs/CustomizeAquamacs)
+
+Troubleshooting / Suggestions
+
+* [Emacs on rails mailing list](http://groups.google.com/group/emacs-on-rails/browse_thread/thread/5e2dba042b4f427a)
+* [ECB load fail](http://comments.gmane.org/gmane.emacs.code-browser/2499)
+* [Emacs, ETags, and using emacs as IDE :: Stackoverflow](http://stackoverflow.com/questions/1598351/emacs-etags-and-using-emacs-as-an-ide)
+* [Example Emacs Rails .init.el file](http://snippets.dzone.com/posts/show/5549)
+* [CEDET Shipped vs Stand-alone](http://sourceforge.net/mailarchive/forum.php?thread_name=87mxl9lx0w.fsf%40randomsample.de&forum_name=cedet-semantic)
+
+Mailing Lists
+
+* GNU
+    * [Emacs Mailing lists](http://savannah.gnu.org/mail/?group_id=40)
+* Google Groups
+    * [Rails on Emacs](http://groups.google.com/group/emacs-on-rails)
