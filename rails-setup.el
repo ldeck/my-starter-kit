@@ -7,6 +7,7 @@
 (setq visible-bell t)
 (setq make-backup-files nil)
 (setq auto-save-default nil)
+(setq x-select-enable-clipboard t)
 
 ;;
 ;; Manually customed variables
@@ -15,12 +16,23 @@
 (push "/usr/local/bin" exec-path)
 (push "/opt/local/bin" exec-path)
 
+(setq browse-url-browser-function 'browse-url-generic
+      browse-url-generic-program "/usr/bin/open")
+
+(defun google-region (beg end)
+  "Google the selected region."
+  (interactive "r")
+  (browse-url (concat "http://www.google.com/search?ie=utf-8&oe=utf-8&q=" (buffer-substring beg end))))
+
+(global-set-key (kbd "C-c C-g C-i") 'google-region) ; [g]oogle [i]t
+
 ;;
 ;; editing preferences
 ;;
 (setq-default tab-width 2)              ; tabs
 (setq-default indent-tabs-mode nil)
 (global-font-lock-mode t)               ; syntax highlighting
+(setq font-lock-maximum-decoration t)   ; mode default level of fontification
 (delete-selection-mode t)
 (blink-cursor-mode t)
 (show-paren-mode t)
@@ -29,6 +41,12 @@
 (global-linum-mode t)
 (column-number-mode t)
 (fset 'yes-or-no-p 'y-or-n-p)
+(follow-mode t)                         ; Easier editing of longs files
+
+(require 'hl-line)                      ; highlight current line
+(global-hl-line-mode t)
+;(highlight-current-line-set-bg-color "#E5F5B3")
+
 
 ;;
 ;; files / history
@@ -45,9 +63,9 @@
 ;; @see http://www.emacswiki.org/emacs/ELPA
 (setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
                          ("gnu" . "http://elpa.gnu.org/packages/")
-                         ;;community effort
-                         ;;("marmelaide" "http://marmalade-repo.org/packages/")
+                         ("marmelaide" . "http://marmalade-repo.org/packages/")
                          ))
+(package-initialize)
 
 ;; ECB preferences early setup
 (setq ecb-auto-activate 't)
@@ -81,7 +99,7 @@
 ;; ECB
 (add-to-list 'load-path (expand-file-name (concat (file-name-directory load-file-name) "/vendor/ecb")))
 (require 'ecb)
-(ecb-activate)
+
 ;;uncomment these momentarily if ecb fails to load
 ;;(ecb-activate)
 ;;(ecb-byte-compile)
@@ -111,6 +129,10 @@
 
 ;; ido-mode
 (ido-mode t)
+(setq ido-enable-flex-matching t)
+
+(smex-initialize)                       ; ido for M-x
+(global-set-key (kbd "M-x") 'smex)
 
 ;;
 ;; Various Modes for Ruby / Rails Development
