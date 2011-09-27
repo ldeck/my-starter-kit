@@ -1,0 +1,15 @@
+[submodule "vendor/cucumber"]
+	path = vendor/cucumber
+	url = git://github.com/ldeck/cucumber.el.git
+[submodule "vendor/ecb"]
+	path = vendor/ecb
+	url = https://github.com/emacsmirror/ecb.git
+[submodule "vendor/emacs-rails-reloaded"]
+	path = vendor/emacs-rails-reloaded
+	url = https://github.com/r0man/emacs-rails-reloaded.git
+[submodule "vendor/textmate"]
+	path = vendor/textmate
+	url = git://github.com/defunkt/textmate.el.git
+[submodule "vendor/rinari"]
+	path = vendor/rinari
+	url = https://github.com/eschulte/rinari.git
