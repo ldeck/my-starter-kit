@@ -1,0 +1,14 @@
+  css-mode           1.0          installed  Major mode for editing Cascading Style Sheets
+  diff-git           0.1.1        installed  Git integration with diff-mode
+  inf-ruby           2.1          installed  Run a ruby process in a buffer
+  magit              0.8.1        installed  control Git from Emacs.
+  rspec-mode         0.2          installed  Enhance ruby-mode for RSpec
+  ruby-compilation   0.7          installed  run a ruby process in a compilation buffer
+  ruby-electric      1.1          installed  electric editing commands for ruby files
+  ruby-mode          1.1          installed  Major mode for editing Ruby files
+  ruby-test-mode     1.0          installed  Minor mode for Behaviour and Test Driven
+  rvm                1.1          installed  Emacs integration for rvm
+  smex               1.1.1        installed  M-x interface with Ido-style fuzzy matching.
+  yaml-mode          0.0.5        installed  Major mode for editing YAML files
+  yari               0.3          installed  Yet Another RI interface for Emacs
+  yasnippet-bundle   0.6.1        installed  Yet another snippet extension (Auto compiled bundle)
