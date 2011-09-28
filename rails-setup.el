@@ -9,13 +9,6 @@
 (setq auto-save-default nil)
 (setq x-select-enable-clipboard t)
 
-;;
-;; Manually customed variables
-;; not sure of the order
-;;
-(push "/usr/local/bin" exec-path)
-(push "/opt/local/bin" exec-path)
-
 (setq browse-url-browser-function 'browse-url-generic
       browse-url-generic-program "/usr/bin/open")
 
