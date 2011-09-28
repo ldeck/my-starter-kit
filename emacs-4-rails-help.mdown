@@ -268,6 +268,7 @@ Relevant Blogs
 * [Emacs-fu :: Navigating through source code](http://emacs-fu.blogspot.com/2009/01/navigating-through-source-code-using.html)
 * [Emacs NERDERY :: Search & Replace Across Files](http://atomized.org/2009/05/emacs-nerdery-search-replace-across-files/)
 * [Emacs24 Features Preview](http://batsov.com/Emacs/2011/08/19/a-peek-at-emacs24.html)
+* [Wyeworks Blog :: My Emacs for rails](http://blog.wyeworks.com/2009/9/11/my-emacs-for-rails)
 
 Relevant Screencasts
 
@@ -281,6 +282,8 @@ Reference / Wiki sites:
 * [Emacs Quick Reference](http://sean.wenzel.net/docs/emacs/quick_reference/)
 * [Emacs Command List](http://lpn.rnbhq.org/tools/xemacs/emacs_ref.html)
 * [Emacs Keyboard Shortcuts](http://xahlee.org/emacs/keyboard_shortcuts.html)
+* [Emacs Cheat Sheet](http://majorursa.net/emacs_cheatsheet.html)
+* [Ruby Factory Girl](https://github.com/thoughtbot/factory_girl)
 * [Rinari Cheat Sheet](http://cheat.errtheblog.com/s/rinari/)
 * [GNU Emacs](http://www.gnu.org/s/emacs/)
 * [Gentle Introduction to CEDET](http://alexott.net/en/writings/emacs-devenv/EmacsCedet.html)
