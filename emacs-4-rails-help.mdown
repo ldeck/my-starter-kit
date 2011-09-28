@@ -274,6 +274,7 @@ Relevant Screencasts
 * [Rinari Screencast](http://vimeo.com/2854412)
 * [Platypope demo](http://platypope.org/yada/emacs-demo/)
 * [Emacs Screencasts](http://www.emacswiki.org/emacs/EmacsScreencasts)
+* [Emacs Column Editing with CUA](http://vimeo.com/1168225?sec=1168225)
 
 Reference / Wiki sites:
 
