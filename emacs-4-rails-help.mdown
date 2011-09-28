@@ -281,6 +281,7 @@ Reference / Wiki sites:
 * [Emacs Quick Reference](http://sean.wenzel.net/docs/emacs/quick_reference/)
 * [Emacs Command List](http://lpn.rnbhq.org/tools/xemacs/emacs_ref.html)
 * [Emacs Keyboard Shortcuts](http://xahlee.org/emacs/keyboard_shortcuts.html)
+* [Rinari Cheat Sheet](http://cheat.errtheblog.com/s/rinari/)
 * [GNU Emacs](http://www.gnu.org/s/emacs/)
 * [Gentle Introduction to CEDET](http://alexott.net/en/writings/emacs-devenv/EmacsCedet.html)
 * [GNU Global source code tag system](http://www.gnu.org/software/global/global.html)
