@@ -4,6 +4,7 @@ CHEATSHEET :: Emacs on Rails
 References:
 * [http://majorursa.net/emacs_cheatsheet.html](http://majorursa.net/emacs_cheatsheet.html)
 * [http://cheat.errtheblog.com/s/rinari/](http://cheat.errtheblog.com/s/rinari/)
+* [http://sean.wenzel.net/docs/emacs/quick_reference/](http://sean.wenzel.net/docs/emacs/quick_reference/)
 
 Contents
 --------
