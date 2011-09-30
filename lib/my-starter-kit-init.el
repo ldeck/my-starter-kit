@@ -21,9 +21,15 @@
 (add-to-list 'load-path msk-settings-dir)
 (add-to-list 'load-path msk-hooks-dir)
 
+;; early init hook
+(if (boundp 'msk-init-begin)
+  (require 'msk-init-begin))
+
 ;; auto-load require packages
 (require 'my-package-autoloads)
 (require 'my-el-get-autoloads)
+(if (boundp 'msk-init-features)
+  (require 'msk-init-features))
 
 ;; load custom settings
 (dolist (setting-file (file-expand-wildcards (concat msk-settings-dir "*-settings.el")))
@@ -35,7 +41,8 @@
   (progn (print (concat "---> loading " (file-name-sans-extension (file-name-nondirectory hook-file)))))
   (require (intern (file-name-sans-extension (file-name-nondirectory hook-file)))))
 
-(require 'my-init-last)
+(if (boundp 'msk-init-last)
+  (require 'msk-init-last))
 ;;
 ;; END
 ;;
