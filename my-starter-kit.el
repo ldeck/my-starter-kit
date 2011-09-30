@@ -1,4 +1,6 @@
 ; emacs init.el
+(provide 'my-starter-kit)
+
 ; assumes emacs >= 24
 (setq stack-trace-on-error t)
 
@@ -24,16 +26,22 @@
     (package-install p)))
 
 ;;
-;; All further config goes here:
+;; All further config for the standard starter-kit goes here:
 ;; ~/.emacs.d/<login>.el
 ;; ~/.emacs.d/<login>/*.el
 ;; ~/.emacs.d/<hostname>.el
 ;;
 ;; Further usage here: https://github.com/technomancy/emacs-starter-kit
 
-(add-to-list 'load-path (concat (file-name-directory load-file-name) "lib")
+;;
+;; But you can provide your configs using the my-starter-kit way too/instead
+;; ~/.emacs.d/<login>-starter-kit/package/msk-el-get-sources.el
+;; ~/.emacs.d/<login>-starter-kit/package/msk-package-sources.el
+;; ~/.emacs.d/<login>-starter-kit/settings/*-settings.el
+;; ~/.emacs.d/<login>-starter-kit/hooks/*-hooks.el
+;;
+
+(add-to-list 'load-path (concat (file-name-directory load-file-name) "lib"))
 (require 'my-starter-kit-init)
 
 ;; Enjoy!
-
-(provide 'my-starter-kit)
