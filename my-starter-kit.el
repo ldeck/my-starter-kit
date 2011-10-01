@@ -1,7 +1,7 @@
 ; emacs init.el
-(provide 'my-starter-kit)
-
 ; assumes emacs >= 24
+;
+(provide 'my-starter-kit)
 (setq stack-trace-on-error t)
 
 ;; packages are available from a few places:
@@ -42,6 +42,6 @@
 ;;
 
 (add-to-list 'load-path (concat (file-name-directory load-file-name) "lib"))
-(require 'my-starter-kit-init)
+(require 'msk-init)
 
 ;; Enjoy!

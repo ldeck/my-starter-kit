@@ -1,17 +1,12 @@
-;;
-(provide 'my-starter-kit-init)
+;; my-starter-kit-init loads the <login>-starter-kit defined configuration
+;; see README for docs
+;; 
+(provide 'msk-init)
 
-;; my.el will auto-load:
-;;   custom/my-init-begin.el
-;;   custom/my-init-features.el
-;;   custom/*-settings.el
-;;   custom/*-hooks.el
-;;   custom/my-init-last.el
-;;
 (setq stack-trace-on-error t)
 (setq debug-on-error t)
 
-;; directories we care about
+;; add directories we care about to the load-path
 (defvar msk-user-dir (concat user-emacs-directory user-login-name "-starter-kit/"))
 (defvar msk-init-dir (concat msk-user-dir "init/"))
 (defvar msk-settings-dir (concat msk-user-dir "settings/"))
@@ -19,28 +14,31 @@
 
 (add-to-list 'load-path msk-init-dir)
 (add-to-list 'load-path msk-settings-dir)
-(add-to-list 'load-path msk-hooks-dir)
+(add-to-list 'load-path msk-hooks-dir) 
 
-;; early init hook
+;; load user defined msk-init-begin if available
 (if (boundp 'msk-init-begin)
   (require 'msk-init-begin))
 
-;; auto-load require packages
-(require 'my-package-autoloads)
-(require 'my-el-get-autoloads)
+;; package and el-get autoloads manage themselves
+(require 'msk-package-autoloads)
+(require 'msk-el-get-autoloads)
+
+;; load user defined msk-init-features if available
 (if (boundp 'msk-init-features)
   (require 'msk-init-features))
 
-;; load custom settings
+;; load any user defined custom settings
 (dolist (setting-file (file-expand-wildcards (concat msk-settings-dir "*-settings.el")))
   (progn (print (concat "---> loading " (file-name-sans-extension (file-name-nondirectory setting-file)))))
   (require (intern (file-name-sans-extension (file-name-nondirectory setting-file)))))
 
-;; load custom hooks
+;; load any user defined custom hooks
 (dolist (hook-file (file-expand-wildcards (concat msk-hooks-dir "*-hooks.el")))
   (progn (print (concat "---> loading " (file-name-sans-extension (file-name-nondirectory hook-file)))))
   (require (intern (file-name-sans-extension (file-name-nondirectory hook-file)))))
 
+;; finally load user defined msk-init-last if available
 (if (boundp 'msk-init-last)
   (require 'msk-init-last))
 ;;

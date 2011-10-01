@@ -1,6 +1,6 @@
 ;; el-get and associated autoloaded packages
 ;; 
-(provide 'my-el-get-autoloads)
+(provide 'msk-el-get-autoloads)
 
 (defvar el-get-dir (concat user-emacs-directory "el-get/el-get"))
 (defvar msk-el-get-config-dir (concat user-emacs-directory user-login-name "-starter-kit/package/"))

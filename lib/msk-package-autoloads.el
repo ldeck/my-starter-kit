@@ -1,5 +1,5 @@
 ; load preferred packages via package
-(provide 'my-package-autoloads)
+(provide 'msk-package-autoloads)
 
 (defvar el-get-dir (concat user-emacs-directory "el-get/el-get"))
 (defvar msk-el-get-config-dir (concat user-emacs-directory user-login-name "-starter-kit/package/"))
