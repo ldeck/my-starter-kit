@@ -7,10 +7,10 @@
 (setq debug-on-error t)
 
 ;; add directories we care about to the load-path
-(defvar msk-user-dir (concat user-emacs-directory user-login-name "-starter-kit/"))
-(defvar msk-init-dir (concat msk-user-dir "init/"))
-(defvar msk-settings-dir (concat msk-user-dir "settings/"))
-(defvar msk-hooks-dir (concat msk-user-dir "hooks/"))
+(defconst msk-user-dir (concat user-emacs-directory user-login-name "-starter-kit/"))
+(defconst msk-init-dir (concat msk-user-dir "init/"))
+(defconst msk-settings-dir (concat msk-user-dir "settings/"))
+(defconst msk-hooks-dir (concat msk-user-dir "hooks/"))
 
 (add-to-list 'load-path msk-init-dir)
 (add-to-list 'load-path msk-settings-dir)

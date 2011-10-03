@@ -1,18 +1,22 @@
 ; load preferred packages via package
 (provide 'msk-package-autoloads)
 
-(defvar el-get-dir (concat user-emacs-directory "el-get/el-get"))
-(defvar msk-el-get-config-dir (concat user-emacs-directory user-login-name "-starter-kit/package/"))
+(defconst msk-package-dir (concat user-emacs-directory user-login-name "-starter-kit/package/"))
+(defconst msk-package-loader (concat msk-package-dir "msk-package-sources.el"))
+
+(add-to-list 'load-path msk-package-dir)
 
 ;;
 ;; nothing to do unless packages are defined in a file
 ;;
-(if (file-exists-p (concat msk-el-get-config-dir "msk-package-sources.el"))
+(if (file-exists-p msk-package-loader)
+  (load-file msk-package-loader)
+)
 
-  ;;
-  ;; and nothing to do unless the defined packages are defined in a var: msk-preferred-packages
-  ;;
-  (if (boundp 'msk-preferred-packages)
+;;
+;; and nothing to do unless the defined packages are defined in a var: msk-preferred-packages
+;;
+(if (boundp 'msk-preferred-packages)
     
     ;;
     ;; cool, pull them in
@@ -21,6 +25,4 @@
       (when (not (package-installed-p p))
         (package-install p)))
 
-  ) ;; end if msk-preferred-packages defined
-) ;; end if file exists
-
+) ;; end if msk-preferred-packages defined
