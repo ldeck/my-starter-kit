@@ -301,6 +301,7 @@ Reference / Wiki sites:
 * [Sample init.el File](http://anonscm.debian.org/hg/xemacs/xemacs-gobject/etc/sample.init.el)
 * [ECB Docs](http://www.xemacs.org/Documentation/packages/html/ecb_toc.html#SEC_Contents)
 * [Git Submodules](http://chrisjean.com/2009/04/20/git-submodules-adding-using-removing-and-updating/)
+* [Goto line](http://irreal.org/blog/?p=258)
 
 Customisation Options
 
