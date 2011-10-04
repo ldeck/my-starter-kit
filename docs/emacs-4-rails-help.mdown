@@ -217,6 +217,8 @@ Note: modes in *italics* are interesting but not necessarily up to snuff
     * [Test case mode :: Main site](http://nschum.de/src/emacs/test-case-mode/)
     * [Test case mode :: Github](https://github.com/search?q=test-case-mode&type=Everything&repo=&langOverride=&start_value=1)
     * [Cucumber Mode](https://github.com/michaelklishin/cucumber.el)
+    * [ECukes](http://github.com/rejeep/ecukes)
+    * [Espuds](https://github.com/rejeep/espuds)
 * Ruby specific
     * [RSense](http://cx4a.org/software/rsense/)
     * [Yari front end to ri](https://github.com/pedz/yari-with-buttons)
