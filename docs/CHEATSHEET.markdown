@@ -134,3 +134,20 @@ Emacs : Magit Controls
     T	create annotated tag
     x	prompts for revision resets HEAD to it.
 
+TextMate Minor Mode
+-------------------
+
+    ;;    ⌘T - Go to File
+    ;;  ⇧⌘T - Go to Symbol
+    ;;    ⌘L - Go to Line
+    ;;  ⇧⌘L - Select Line (or expand Selection to select lines)
+    ;;    ⌘/ - Comment Line (or Selection/Region)
+    ;;    ⌘] - Shift Right (currently indents region)
+    ;;    ⌘[ - Shift Left  (not yet implemented)
+    ;;  ⌥⌘] - Align Assignments
+    ;;  ⌥⌘[ - Indent Line
+    ;;    ⌥↑ - Column Up
+    ;;    ⌥↓ - Column Down
+    ;;  ⌘RET - Insert Newline at Line's End
+    ;;  ⌥⌘T - Reset File Cache (for Go to File)
+
