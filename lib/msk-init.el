@@ -21,6 +21,7 @@
   (require 'msk-init-begin))
 
 ;; package and el-get autoloads manage themselves
+(add-to-list 'load-path (expand-file-name (concat msk-user-dir "package")))
 (require 'msk-package-autoloads)
 (require 'msk-el-get-autoloads)
 

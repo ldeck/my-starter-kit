@@ -2,43 +2,28 @@
 ;; 
 (provide 'msk-el-get-autoloads)
 
-(defvar el-get-dir (concat user-emacs-directory "el-get/el-get"))
-(defvar msk-el-get-config-dir (concat user-emacs-directory user-login-name "-starter-kit/package/"))
+(defconst msk-el-get-sources (expand-file-name (concat user-emacs-directory user-login-name "-starter-kit/package/msk-el-get-sources.el")))
 
-;;
-;; nothing to do unless there's a user config file
-;;
-(if (file-exists-p (concat msk-el-get-config-dir "msk-el-get-sources.el"))
+(if (file-exists-p msk-el-get-sources)
+  (progn 
     
-  ;;
-  ;; load it
-  ;;
-  (add-to-list 'load-path msk-el-get-config-dir)
-  (require 'msk-el-get-sources)
-
-  ;;
-  ;; nothing to do unless the user function 'my-el-get-packages is defined
-  ;;
-  (if (boundp 'my-el-get-packages)
-
-    ;;
-    ;; okay let's grab el-get if it's not already included
-    ;;
-    (unless (file-exists-p el-get-dir)
-      (unless (require 'el-get nil t)
-        (url-retrieve
-          "https://raw.github.com/dimitri/el-get/master/el-get-install.el"
-          (lambda (s)
-            (end-of-buffer)
-              (eval-print-last-sexp)))))
+    (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
     
-    ;; load el-get
-    (add-to-list 'load-path el-get-dir)
-    (require 'el-get)
+    (unless (require 'el-get nil t)
+      (with-current-buffer
+          (url-retrieve-synchronously
+           "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
+        (end-of-buffer)
+        (eval-print-last-sexp)))
+    
+    (require 'msk-el-get-sources)
+    
+    (if (boundp 'msk-el-get-packages)
+        (progn
+          (el-get 'sync msk-el-get-packages)
+          (el-get 'wait)
+          ))
+))
 
-    ;; custom config already loaded
-    ;; so we'll pass off to el-get to load stuff as defined
-    (el-get 'wait my-el-get-packages)
 
-  ) ; end if my-el-get-packages
-) ; end if msk-el-get-config exists
+
