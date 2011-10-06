@@ -11,10 +11,12 @@
 (defconst msk-init-dir (concat msk-user-dir "init/"))
 (defconst msk-settings-dir (concat msk-user-dir "settings/"))
 (defconst msk-hooks-dir (concat msk-user-dir "hooks/"))
+(defconst msk-themes-dir (concat msk-user-dir "themes/"))
 
 (add-to-list 'load-path msk-init-dir)
 (add-to-list 'load-path msk-settings-dir)
-(add-to-list 'load-path msk-hooks-dir) 
+(add-to-list 'load-path msk-hooks-dir)
+(add-to-list 'load-path msk-themes-dir)
 
 ;; load user defined msk-init-begin if available
 (if (boundp 'msk-init-begin)
