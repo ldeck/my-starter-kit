@@ -98,9 +98,8 @@
    and msk-ecb-after-directory-change-hook"
   (let ((diroldfull (expand-file-name (directory-file-name dirold)))
         (dirnewfull (expand-file-name (directory-file-name dirnew))))
-    (if (and (not (equal diroldfull dirnewfull))
-             (run-hook-with-args-until-success 'msk-ecb-after-directory-change-toggle-p dirold dirnew))    
-        (run-hook-with-args 'msk-ecb-after-directory-change-hook dirold dirnew))))
+    (if (run-hook-with-args-until-success 'msk-ecb-after-directory-change-toggle-p dirold dirnew)
+        (run-hook-with-args 'msk-ecb-after-directory-change-hook dirold dirnew)))))
 
 (defun msk-ecb-activation-hook ()
   "hook for when ecb is activated"
