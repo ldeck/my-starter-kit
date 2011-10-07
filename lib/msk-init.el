@@ -22,6 +22,8 @@
 (if (boundp 'msk-init-begin)
   (require 'msk-init-begin))
 
+(require 'msk-shared-functions)
+
 ;; package and el-get autoloads manage themselves
 (add-to-list 'load-path (expand-file-name (concat msk-user-dir "package")))
 (require 'msk-package-autoloads)
