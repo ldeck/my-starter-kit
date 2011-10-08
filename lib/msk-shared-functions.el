@@ -101,4 +101,10 @@
   (add-hook 'ecb-after-directory-change-hook 'msk-ecb-after-directory-change-hook)
 )
 
+(defun msk-ecb-deactivation-hook ()
+  "hook for when ecb is deactivated"
+  (remove-hook 'ecb-after-directory-change-hook 'msk-ecb-after-directory-change-hook)
+)
+
 (add-hook 'ecb-activate-hook 'msk-ecb-activation-hook)
+(add-hook 'ecb-deactivate-hook 'msk-ecb-deactivation-hook)
