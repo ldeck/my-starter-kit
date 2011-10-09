@@ -81,30 +81,4 @@
   "true if the symbol MODE is contained in the list returned by msk-active-modes"
   (member mode (msk-active-modes)))
 
-;;
-;; ecb-hook-helpers
-;;
-(defcustom msk-ecb-after-directory-change-hook nil
-  "*hook to be called in when `msk-ecb-after-directory-change-toggle-p is true
-   takes two args DIROLD DIRNEW")
 
-(defun msk-ecb-after-directory-change-hook (dirold dirnew)
-  "*hook tied into ecb-after-directory-change-hook
-   Requires both msk-ecb-after-directory-change-toggle-p
-   and msk-ecb-after-directory-change-hook"
-  (let ((diroldfull (expand-file-name (directory-file-name dirold)))
-        (dirnewfull (expand-file-name (directory-file-name dirnew))))
-    (run-hook-with-args 'msk-ecb-after-directory-change-hook diroldfull dirnewfull)))
-
-(defun msk-ecb-activation-hook ()
-  "hook for when ecb is activated"
-  (add-hook 'ecb-after-directory-change-hook 'msk-ecb-after-directory-change-hook)
-)
-
-(defun msk-ecb-deactivation-hook ()
-  "hook for when ecb is deactivated"
-  (remove-hook 'ecb-after-directory-change-hook 'msk-ecb-after-directory-change-hook)
-)
-
-(add-hook 'ecb-activate-hook 'msk-ecb-activation-hook)
-(add-hook 'ecb-deactivate-hook 'msk-ecb-deactivation-hook)

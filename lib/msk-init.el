@@ -63,6 +63,9 @@
 (require 'msk-package-autoloads)
 (require 'msk-el-get-autoloads)
 
+;; autoloads for particular modes
+(require 'msk-rinari-autoloads)
+
 ;; set file to save/load emacs customisations to
 ;; ~/.emacs.d/<login>-starter-kit/msk-custom.el
 ;; and load it if it exists
