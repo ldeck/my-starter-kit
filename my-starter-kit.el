@@ -36,7 +36,9 @@
 ; assumes emacs >= 24
 ;
 (provide 'my-starter-kit)
-(setq stack-trace-on-error t)
+
+(unless (boundp 'stack-trace-on-error)
+  (setq stack-trace-on-error nil))
 
 ;; packages are available from a few places:
 ;; @see http://www.emacswiki.org/emacs/ELPA

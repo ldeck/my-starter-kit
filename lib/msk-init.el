@@ -37,8 +37,10 @@
 ;; 
 (provide 'msk-init)
 
-(setq stack-trace-on-error t)
-(setq debug-on-error t)
+(unless (boundp 'stack-trace-on-error)
+  (setq stack-trace-on-error nil))
+(unless (boundp 'debug-on-error)
+  (setq debug-on-error nil))
 
 ;; add directories we care about to the load-path
 (defconst msk-user-dir (concat user-emacs-directory user-login-name "-starter-kit/"))
