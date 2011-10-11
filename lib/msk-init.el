@@ -55,8 +55,8 @@
 (add-to-list 'load-path msk-themes-dir)
 
 ;; load user defined msk-init-begin if available
-(if (boundp 'msk-init-begin)
-  (require 'msk-init-begin))
+(if (file-exists-p (concat msk-init-dir "msk-init-begin.el"))
+    (require 'msk-init-begin))
 
 (require 'msk-shared-functions)
 
@@ -78,7 +78,7 @@
 )
 
 ;; load user defined msk-init-features if available
-(if (boundp 'msk-init-features)
+(if (file-exists-p (concat msk-init-dir "msk-init-features.el"))
   (require 'msk-init-features))
 
 ;; load any user defined custom settings
@@ -92,7 +92,7 @@
   (require (intern (file-name-sans-extension (file-name-nondirectory hook-file)))))
 
 ;; finally load user defined msk-init-last if available
-(if (boundp 'msk-init-last)
+(if (file-exists-p (concat msk-init-dir "msk-init-last.el"))
   (require 'msk-init-last))
 ;;
 ;; END
