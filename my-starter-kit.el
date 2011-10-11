@@ -52,16 +52,6 @@
   (package-refresh-contents))
 
 ;;
-;; minimum requirement: starter-kit
-;;
-(defvar init-packages '(starter-kit)
-  "A list of packages to ensure are installed for an initial launch.")
-
-(dolist (p init-packages)
-  (when (not (package-installed-p p))
-    (package-install p)))
-
-;;
 ;; All further config for the standard starter-kit goes here:
 ;; ~/.emacs.d/<login>.el
 ;; ~/.emacs.d/<login>/*.el
