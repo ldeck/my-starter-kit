@@ -224,6 +224,7 @@ Note: modes in *italics* are interesting but not necessarily up to snuff
     * [Yari front end to ri](https://github.com/pedz/yari-with-buttons)
     * [Flymake Ruby :: Github](https://github.com/purcell/flymake-ruby)
     * [Flymake Ruby :: EmacsWiki](http://www.emacswiki.org/emacs/FlymakeRuby)
+    * [Ruby Debug](https://github.com/mark-moseley/ruby-debug)  
 * Rails specific
     * [Emacs Rails :: GitHub :: EmacsMirror](https://github.com/emacsmirror/emacs-rails)
     * [Emacs Rails :: GitHub :: Remvee](https://github.com/remvee/emacs-rails)
