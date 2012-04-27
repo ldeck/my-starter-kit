@@ -42,7 +42,20 @@
 
 ;; packages are available from a few places:
 ;; @see http://www.emacswiki.org/emacs/ELPA
-(require 'package)
+(defun load-extras-package-el ()
+  "fall back to loading extras/package.el"
+  (progn
+    (add-to-list 'load-path (concat (file-name-directory load-file-name) "fallbacks"))
+    (require 'package)))
+
+;; load package.el
+(condition-case nil
+  (require 'package)
+  (error
+    (message "package.el not found, trying extras/package.el")
+    (load-extras-package-el)))
+
+
 (setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
                          ("gnu" . "http://elpa.gnu.org/packages/")
                          ("marmelaide" . "http://marmalade-repo.org/packages/")
